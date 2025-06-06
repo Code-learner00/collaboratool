@@ -22,9 +22,10 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log(`🔌 New connection: ${socket.id}`);
 
-  socket.on("join-room", ({ roomId, username }) => {
+  // 👇 Modified to handle creator
+  socket.on("join-room", ({ roomId, username, isCreator = false }) => {
     socket.join(roomId);
-    addUserToRoom(roomId, { id: socket.id, username });
+    addUserToRoom(roomId, { id: socket.id, username }, isCreator);
 
     socket.to(roomId).emit("user-joined", { id: socket.id, username });
     socket.emit("room-users", getRoomUsers(roomId));
@@ -50,12 +51,18 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     const result = removeUserFromRoom(socket.id);
     if (result) {
-      const { roomId, user } = result;
-      socket.to(roomId).emit("user-left", {
-        id: socket.id,
-        username: user.username,
-      });
-      console.log(`❌ ${user.username} left room ${roomId}`);
+      const { roomId, user, deletedRoom } = result;
+
+      if (deletedRoom) {
+        io.to(roomId).emit("room-closed");
+        console.log(`❌ Room ${roomId} deleted (owner ${user.username} left)`);
+      } else {
+        socket.to(roomId).emit("user-left", {
+          id: socket.id,
+          username: user.username,
+        });
+        console.log(`❌ ${user.username} left room ${roomId}`);
+      }
     }
   });
 });

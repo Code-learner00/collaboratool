@@ -230,7 +230,7 @@ export default function Whiteboard({ roomId, onLeaveRoom }: WhiteboardProps) {
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <Users className="h-4 w-4" />
-          <span>3 participants</span>
+          <span> participants</span>
           <Button variant="outline" size="sm" onClick={() => setIsChatOpen(!isChatOpen)} className="ml-4">
             <MessageCircle className="h-4 w-4 mr-2" />
             Chat
