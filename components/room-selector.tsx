@@ -26,13 +26,6 @@ export default function RoomSelector({ onJoinRoom }: RoomSelectorProps) {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
 
-  // Mock rooms for demonstration
-  const [rooms] = useState<Room[]>([
-    { id: "room-1", name: "Design Team Brainstorm", participants: 3, createdAt: new Date() },
-    { id: "room-2", name: "Project Planning", participants: 5, createdAt: new Date() },
-    { id: "room-3", name: "Quick Sketches", participants: 1, createdAt: new Date() },
-  ])
-
   const handleCreateRoom = () => {
     if (roomName.trim()) {
       const newRoomId = `room-${Date.now()}`
@@ -124,28 +117,6 @@ export default function RoomSelector({ onJoinRoom }: RoomSelectorProps) {
               </div>
             </DialogContent>
           </Dialog>
-        </div>
-
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-900">Active Rooms</h2>
-          <div className="grid gap-4">
-            {rooms.map((room) => (
-              <Card key={room.id} className="cursor-pointer hover:shadow-md transition-shadow">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="text-lg">{room.name}</CardTitle>
-                      <CardDescription className="flex items-center gap-2 mt-1">
-                        <Users className="h-4 w-4" />
-                        {room.participants} participant{room.participants !== 1 ? "s" : ""}
-                      </CardDescription>
-                    </div>
-                    <Button onClick={() => onJoinRoom(room.id)}>Join</Button>
-                  </div>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
         </div>
       </div>
     </div>

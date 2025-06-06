@@ -40,8 +40,7 @@ export default function Whiteboard({ roomId, onLeaveRoom }: WhiteboardProps) {
   ])
   const [users] = useState<User[]>([
     { id: "user-1", username: "You", color: "#3B82F6", isOnline: true, isMuted: false, isVideoOn: false },
-    { id: "user-2", username: "Alice", color: "#EF4444", isOnline: true, isMuted: false, isVideoOn: false },
-    { id: "user-3", username: "Bob", color: "#10B981", isOnline: true, isMuted: true, isVideoOn: false },
+    
   ])
   const [audioState, setAudioState] = useState<AudioState>({
     isMuted: false,
